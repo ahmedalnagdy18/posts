@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
 
-class PostItemWidget extends StatelessWidget {
+class PostItemWidget extends StatefulWidget {
   const PostItemWidget(
       {super.key,
       required this.title,
       required this.description,
-      required this.id});
+      required this.id,
+      required this.idd});
   final String title;
   final String description;
   final String id;
+  final int idd;
+
+  @override
+  State<PostItemWidget> createState() => _PostItemWidgetState();
+}
+
+class _PostItemWidgetState extends State<PostItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +38,7 @@ class PostItemWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Text('User $id',
+              Text('User ${widget.id}',
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -44,8 +54,18 @@ class PostItemWidget extends StatelessWidget {
                 ),
                 elevation: 10,
                 itemBuilder: (context) => [
-                  const PopupMenuItem(child: Text('edit')),
-                  PopupMenuItem(onTap: () {}, child: const Text('delete')),
+                  PopupMenuItem(
+                    child: const Text('edit'),
+                    onTap: () {},
+                  ),
+                  PopupMenuItem(
+                      onTap: () {
+                        print('1111111111111111');
+                        BlocProvider.of<PostsCubit>(context).delete(widget.idd);
+                        setState(() {});
+                        print('22222222222222222');
+                      },
+                      child: const Text('delete')),
                 ],
               ),
             ],
@@ -66,7 +86,7 @@ class PostItemWidget extends StatelessWidget {
               const SizedBox(height: 6),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text(title,
+                child: Text(widget.title,
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       color: Colors.black,
@@ -87,7 +107,7 @@ class PostItemWidget extends StatelessWidget {
               const SizedBox(height: 6),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text(description,
+                child: Text(widget.description,
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       color: Colors.black,

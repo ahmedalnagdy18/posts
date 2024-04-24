@@ -25,3 +25,9 @@ class Postsadded extends PostsState {
 
   const Postsadded(this.products);
 }
+
+class DeletePost extends PostsState {
+  final int postId;
+
+  DeletePost({required this.postId});
+}

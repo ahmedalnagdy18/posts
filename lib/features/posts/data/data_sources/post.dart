@@ -17,4 +17,14 @@ class PostRemoteDataSource {
       throw Exception('Failed to load posts');
     }
   }
+
+  Future<void> deletePost(int postId) async {
+    final response =
+        await http.delete(Uri.parse('https://dummyjson.com/posts/$postId'));
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to delete post');
+    }
+  }
 }

@@ -15,4 +15,13 @@ class PostRepositoryImpl implements PostRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> deletePost(int postId) async {
+    try {
+      await remoteDataSource.deletePost(postId);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
