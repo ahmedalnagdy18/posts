@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/delete_usecase.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/update_post.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/usecase.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_state.dart';
@@ -15,7 +16,9 @@ class TimelineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PostsCubit(
-          PostUsecase(repository: sl()), DeletePostUsecase(repository: sl()))
+          PostUsecase(repository: sl()),
+          DeletePostUsecase(repository: sl()),
+          UpdatePostUsecase(repository: sl()))
         ..fetchData(10, 0),
       child: const _TimelineBody(),
     );
@@ -79,6 +82,7 @@ class _TimelineBodyState extends State<_TimelineBody> {
                               description: state.posts[index].body.toString(),
                               userId: state.posts[index].id.toString(),
                               removeId: state.posts[index].id ?? 0,
+                              updateId: state.posts[index].id ?? 0,
                             );
                           } else {
                             return const Center(

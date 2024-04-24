@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
+import 'package:nagdy_app/features/posts/presentation/pages/edit_post_page.dart';
 
 class PostItemWidget extends StatefulWidget {
   const PostItemWidget(
@@ -8,11 +9,13 @@ class PostItemWidget extends StatefulWidget {
       required this.title,
       required this.description,
       required this.userId,
-      required this.removeId});
+      required this.removeId,
+      required this.updateId});
   final String title;
   final String description;
   final String userId;
   final int removeId;
+  final int updateId;
 
   @override
   State<PostItemWidget> createState() => _PostItemWidgetState();
@@ -30,6 +33,7 @@ class _PostItemWidgetState extends State<PostItemWidget> {
           Row(
             children: [
               Container(
+                //! user photo
                 height: 35,
                 width: 35,
                 decoration: const BoxDecoration(
@@ -38,13 +42,14 @@ class _PostItemWidgetState extends State<PostItemWidget> {
                 ),
               ),
               const SizedBox(width: 8),
-              Text('User ${widget.userId}',
+              Text('User ${widget.userId}', //! user Id
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                   )),
               const Spacer(),
+              //! delete and edit button
               PopupMenuButton(
                 padding: EdgeInsets.zero,
                 color: Colors.white,
@@ -56,7 +61,19 @@ class _PostItemWidgetState extends State<PostItemWidget> {
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     child: const Text('edit'),
-                    onTap: () {},
+                    onTap: () {
+                      final postCubit = BlocProvider.of<PostsCubit>(context);
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => BlocProvider.value(
+                                value: postCubit,
+                                child: EditPostPage(
+                                  title: widget.title,
+                                  description: widget.description,
+                                  userId: widget.updateId,
+                                ),
+                              )));
+                    },
                   ),
                   PopupMenuItem(
                       onTap: () {
@@ -72,6 +89,7 @@ class _PostItemWidgetState extends State<PostItemWidget> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              //! title
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Text('Title :',
@@ -93,6 +111,7 @@ class _PostItemWidgetState extends State<PostItemWidget> {
                     )),
               ),
               const SizedBox(height: 12),
+              //! Description
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Text('Description :',

@@ -1,14 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagdy_app/features/posts/data/models/api_model.dart';
+import 'package:nagdy_app/features/posts/domain/model/domin_model.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/delete_usecase.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/update_post.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/usecase.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_state.dart';
 
 class PostsCubit extends Cubit<PostsState> {
   final PostUsecase postUsecase;
   final DeletePostUsecase deletePostUsecase;
+  final UpdatePostUsecase updatePostUsecase;
   List<Apiposts> newPost = [];
-  PostsCubit(this.postUsecase, this.deletePostUsecase) : super(PostsInitial());
+  PostsCubit(this.postUsecase, this.deletePostUsecase, this.updatePostUsecase)
+      : super(PostsInitial());
 //! get the posts
   Future<void> fetchData(int limit, int skip) async {
     try {
@@ -42,5 +46,31 @@ class PostsCubit extends Cubit<PostsState> {
     final index = newListOfPost.indexWhere((element) => element.id == id);
     newListOfPost.removeAt(index);
     emit(PostsLoaded(newState.posts));
+  }
+
+//! Update the posts
+  void update(DomainModel updatedPost) async {
+    try {
+      await updatePostUsecase.call(updatedPost);
+      updatePost(updatedPost);
+    } catch (e) {
+      emit(const PostsError('error occurred while updating'));
+    }
+  }
+
+  void updatePost(DomainModel updatedPost) {
+    final newState = state as PostsLoaded;
+    final updatedList = newState.posts.map((post) {
+      if (post.id == updatedPost.id) {
+        return Apiposts(
+          id: updatedPost.id,
+          title: updatedPost.title,
+          body: updatedPost.body,
+        );
+      } else {
+        return post;
+      }
+    }).toList();
+    emit(PostsLoaded(updatedList));
   }
 }

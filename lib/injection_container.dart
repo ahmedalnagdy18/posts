@@ -3,6 +3,7 @@ import 'package:nagdy_app/features/posts/data/data_sources/post.dart';
 import 'package:nagdy_app/features/posts/data/repositories_imp/repository_imp.dart';
 import 'package:nagdy_app/features/posts/domain/repositories/repostory.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/delete_usecase.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/update_post.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/usecase.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
 
@@ -24,5 +25,7 @@ Future<void> init() async {
 
   // Cubit
   sl.registerLazySingleton<PostsCubit>(() => PostsCubit(
-      PostUsecase(repository: sl()), DeletePostUsecase(repository: sl())));
+      PostUsecase(repository: sl()),
+      DeletePostUsecase(repository: sl()),
+      UpdatePostUsecase(repository: sl())));
 }
