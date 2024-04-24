@@ -5,6 +5,7 @@ import 'package:nagdy_app/features/posts/domain/usecase/update_post.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/usecase.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_state.dart';
+import 'package:nagdy_app/features/posts/presentation/pages/add_post_page.dart';
 import 'package:nagdy_app/features/posts/presentation/widgets/loading_widget.dart';
 import 'package:nagdy_app/features/posts/presentation/widgets/post_item_widget.dart';
 import 'package:nagdy_app/injection_container.dart';
@@ -56,6 +57,33 @@ class _TimelineBodyState extends State<_TimelineBody> {
         if (state is PostsLoaded) {
           return Scaffold(
             backgroundColor: Colors.white,
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(bottom: 30, right: 10),
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.orange,
+                  tooltip: 'Add Review',
+                  elevation: 4.0,
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AddpostPage()));
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.add,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endDocked,
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),

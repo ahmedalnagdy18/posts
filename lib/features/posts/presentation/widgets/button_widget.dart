@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
-  const ButtonWidget({super.key, required this.onPressed});
+  const ButtonWidget({super.key, required this.onPressed, required this.text});
   final void Function()? onPressed;
+  final String text;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
@@ -11,12 +12,12 @@ class ButtonWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(25)),
-      color: Colors.green,
+      color: Colors.orange,
       elevation: 0,
       onPressed: onPressed,
-      child: const Text(
-        'Update',
-        style: TextStyle(
+      child: Text(
+        text,
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 17,
           fontWeight: FontWeight.w700,

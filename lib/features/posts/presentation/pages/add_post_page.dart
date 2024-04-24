@@ -1,36 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nagdy_app/features/posts/domain/model/domin_model.dart';
-import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
+import 'package:flutter/services.dart';
 import 'package:nagdy_app/features/posts/presentation/widgets/button_widget.dart';
 import 'package:nagdy_app/features/posts/presentation/widgets/textfield_widget.dart';
 
-class EditPostPage extends StatefulWidget {
-  const EditPostPage(
-      {super.key,
-      required this.title,
-      required this.description,
-      required this.userId});
-  final String title;
-  final String description;
-  final int userId;
+class AddpostPage extends StatefulWidget {
+  const AddpostPage({super.key});
 
   @override
-  State<EditPostPage> createState() => _EditPostPageState();
+  State<AddpostPage> createState() => _AddpostPageState();
 }
 
-class _EditPostPageState extends State<EditPostPage> {
-  late final TextEditingController descriptionn;
-  late final TextEditingController title;
+class _AddpostPageState extends State<AddpostPage> {
+  final TextEditingController postUserId = TextEditingController();
+  final TextEditingController postTitle = TextEditingController();
 
-  @override
-  void initState() {
-    descriptionn = TextEditingController(text: widget.description);
-    title = TextEditingController(text: widget.title);
-
-    super.initState();
-  }
-
+  final TextEditingController postDescribtion = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +27,19 @@ class _EditPostPageState extends State<EditPostPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('User ${widget.userId}',
+                //! UserId
+                const Text('User ',
                     textAlign: TextAlign.start,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                     )),
+                const SizedBox(height: 6),
+                TextfieldWidget(controller: postUserId, inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'[0-9]')), // Allow only numbers
+                ]),
                 const SizedBox(height: 20),
                 //! title
                 const Text('Title :',
@@ -60,7 +50,7 @@ class _EditPostPageState extends State<EditPostPage> {
                       fontWeight: FontWeight.w500,
                     )),
                 const SizedBox(height: 6),
-                TextfieldWidget(controller: title),
+                TextfieldWidget(controller: postTitle),
                 const SizedBox(height: 20),
                 //! Description
                 const Text('Description :',
@@ -71,7 +61,7 @@ class _EditPostPageState extends State<EditPostPage> {
                       fontWeight: FontWeight.w500,
                     )),
                 const SizedBox(height: 6),
-                TextfieldWidget(controller: descriptionn, maxLines: 4),
+                TextfieldWidget(controller: postDescribtion, maxLines: 4),
                 const SizedBox(height: 20),
                 Divider(thickness: 1, color: Colors.grey.shade400),
                 const SizedBox(
@@ -80,17 +70,17 @@ class _EditPostPageState extends State<EditPostPage> {
                 //! Button
                 ButtonWidget(
                   onPressed: () {
-                    final updatedPost = DomainModel(
-                      title: title.text,
-                      body: descriptionn.text,
-                      id: widget.userId,
-                    );
+                    // final updatedPost = DomainModel(
+                    //   title: title.text,
+                    //   body: descriptionn.text,
+                    //   id: widget.userId,
+                    // );
 
-                    BlocProvider.of<PostsCubit>(context).update(updatedPost);
+                    // BlocProvider.of<PostsCubit>(context).update(updatedPost);
 
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   },
-                  text: 'Update',
+                  text: 'Add Post',
                 )
               ],
             ),

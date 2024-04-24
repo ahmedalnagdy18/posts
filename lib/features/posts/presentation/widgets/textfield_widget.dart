@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextfieldWidget extends StatelessWidget {
-  const TextfieldWidget({super.key, this.controller, this.maxLines});
+  const TextfieldWidget(
+      {super.key, this.controller, this.maxLines, this.inputFormatters});
   final TextEditingController? controller;
   final int? maxLines;
+  final List<TextInputFormatter>? inputFormatters;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: inputFormatters,
       maxLines: maxLines,
       controller: controller,
       decoration: InputDecoration(
