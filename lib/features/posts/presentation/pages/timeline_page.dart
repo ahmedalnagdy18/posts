@@ -77,8 +77,8 @@ class _TimelineBodyState extends State<_TimelineBody> {
                             return PostItemWidget(
                               title: state.posts[index].title.toString(),
                               description: state.posts[index].body.toString(),
-                              id: state.posts[index].id.toString(),
-                              idd: state.posts[index].id ?? 0,
+                              userId: state.posts[index].id.toString(),
+                              removeId: state.posts[index].id ?? 0,
                             );
                           } else {
                             return const Center(

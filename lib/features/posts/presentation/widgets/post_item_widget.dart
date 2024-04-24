@@ -7,12 +7,12 @@ class PostItemWidget extends StatefulWidget {
       {super.key,
       required this.title,
       required this.description,
-      required this.id,
-      required this.idd});
+      required this.userId,
+      required this.removeId});
   final String title;
   final String description;
-  final String id;
-  final int idd;
+  final String userId;
+  final int removeId;
 
   @override
   State<PostItemWidget> createState() => _PostItemWidgetState();
@@ -38,7 +38,7 @@ class _PostItemWidgetState extends State<PostItemWidget> {
                 ),
               ),
               const SizedBox(width: 8),
-              Text('User ${widget.id}',
+              Text('User ${widget.userId}',
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -60,10 +60,9 @@ class _PostItemWidgetState extends State<PostItemWidget> {
                   ),
                   PopupMenuItem(
                       onTap: () {
-                        print('1111111111111111');
-                        BlocProvider.of<PostsCubit>(context).delete(widget.idd);
+                        BlocProvider.of<PostsCubit>(context)
+                            .delete(widget.removeId);
                         setState(() {});
-                        print('22222222222222222');
                       },
                       child: const Text('delete')),
                 ],
