@@ -85,7 +85,15 @@ class _EditPostPageState extends State<EditPostPage> {
                       body: descriptionn.text,
                       id: widget.userId,
                     );
-
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.orange,
+                      content: const Text('Post Updated successfully'),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        textColor: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ));
                     BlocProvider.of<PostsCubit>(context).update(updatedPost);
 
                     Navigator.of(context).pop();

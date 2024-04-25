@@ -79,7 +79,15 @@ class _AddpostPageState extends State<AddpostPage> {
                       body: postDescribtion.text,
                       id: id,
                     );
-
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.orange,
+                      content: const Text('Post added successfully'),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        textColor: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ));
                     BlocProvider.of<PostsCubit>(context).addPost(aaddPost);
 
                     Navigator.of(context).pop();
