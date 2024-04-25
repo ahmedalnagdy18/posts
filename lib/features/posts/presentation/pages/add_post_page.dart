@@ -73,6 +73,7 @@ class _AddpostPageState extends State<AddpostPage> {
                 //! Button
                 ButtonWidget(
                   onPressed: () {
+                    // to convert the controller from string to int
                     final id = int.tryParse(postUserId.text) ?? 0;
                     final aaddPost = DomainModel(
                       title: postTitle.text,

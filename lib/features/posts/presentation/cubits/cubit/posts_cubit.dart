@@ -74,6 +74,7 @@ class PostsCubit extends Cubit<PostsState> {
         return post;
       }
     }).toList();
+    newPost = updatedList;
     emit(PostsLoaded(updatedList));
   }
 
