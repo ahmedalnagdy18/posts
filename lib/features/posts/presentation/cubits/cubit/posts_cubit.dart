@@ -1,17 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagdy_app/features/posts/data/models/api_model.dart';
 import 'package:nagdy_app/features/posts/domain/model/domin_model.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/add_post_usecase.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/delete_usecase.dart';
-import 'package:nagdy_app/features/posts/domain/usecase/update_post.dart';
-import 'package:nagdy_app/features/posts/domain/usecase/usecase.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/update_post_usecase.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/get_posts_usecase.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_state.dart';
 
 class PostsCubit extends Cubit<PostsState> {
   final PostUsecase postUsecase;
   final DeletePostUsecase deletePostUsecase;
   final UpdatePostUsecase updatePostUsecase;
+  final AddPostUsecase addPostUsecase;
   List<Apiposts> newPost = [];
-  PostsCubit(this.postUsecase, this.deletePostUsecase, this.updatePostUsecase)
+  PostsCubit(this.postUsecase, this.deletePostUsecase, this.updatePostUsecase,
+      this.addPostUsecase)
       : super(PostsInitial());
 //! get the posts
   Future<void> fetchData(int limit, int skip) async {
@@ -72,5 +75,18 @@ class PostsCubit extends Cubit<PostsState> {
       }
     }).toList();
     emit(PostsLoaded(updatedList));
+  }
+
+  //! add posts
+  void addPost(DomainModel createPost) {
+    final newState = state as PostsLoaded;
+    final newListOfPost = newState.posts;
+    final newPostToAdd = Apiposts(
+      id: createPost.id,
+      title: createPost.title,
+      body: createPost.body,
+    );
+    newListOfPost.insert(0, newPostToAdd);
+    emit(PostsLoaded(newListOfPost));
   }
 }

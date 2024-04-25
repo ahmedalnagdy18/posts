@@ -36,8 +36,23 @@ class PostRemoteDataSource {
     };
 
     final response = await http
-        .delete(Uri.parse('https://dummyjson.com/posts/$postId'), body: body);
+        .patch(Uri.parse('https://dummyjson.com/posts/$postId'), body: body);
     if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to delete post');
+    }
+  }
+
+  Future<void> addedPost(Apiposts postModel) async {
+    final body = {
+      "title": postModel.title,
+      "body": postModel.body,
+    };
+
+    final response =
+        await http.post(Uri.parse('https://dummyjson.com/posts/'), body: body);
+    if (response.statusCode == 201) {
       return;
     } else {
       throw Exception('Failed to delete post');

@@ -42,6 +42,7 @@ class _PostItemWidgetState extends State<PostItemWidget> {
                 ),
               ),
               const SizedBox(width: 8),
+
               Text('User ${widget.userId}', //! user Id
                   style: const TextStyle(
                     color: Colors.black,

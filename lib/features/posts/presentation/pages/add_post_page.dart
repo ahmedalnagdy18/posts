@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nagdy_app/features/posts/domain/model/domin_model.dart';
+import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
 import 'package:nagdy_app/features/posts/presentation/widgets/button_widget.dart';
 import 'package:nagdy_app/features/posts/presentation/widgets/textfield_widget.dart';
 
@@ -70,15 +73,16 @@ class _AddpostPageState extends State<AddpostPage> {
                 //! Button
                 ButtonWidget(
                   onPressed: () {
-                    // final updatedPost = DomainModel(
-                    //   title: title.text,
-                    //   body: descriptionn.text,
-                    //   id: widget.userId,
-                    // );
+                    final id = int.tryParse(postUserId.text) ?? 0;
+                    final aaddPost = DomainModel(
+                      title: postTitle.text,
+                      body: postDescribtion.text,
+                      id: id,
+                    );
 
-                    // BlocProvider.of<PostsCubit>(context).update(updatedPost);
+                    BlocProvider.of<PostsCubit>(context).addPost(aaddPost);
 
-                    // Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                   text: 'Add Post',
                 )

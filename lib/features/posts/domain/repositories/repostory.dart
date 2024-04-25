@@ -5,4 +5,5 @@ abstract class PostRepository {
   Future<List<Apiposts>> getCarts(int limit, int skip);
   Future<void> deletePost(int id);
   Future<void> updatePost(DomainModel post);
+  Future<void> addPost(DomainModel post);
 }

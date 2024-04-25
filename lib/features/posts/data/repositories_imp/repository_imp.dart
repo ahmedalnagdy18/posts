@@ -37,4 +37,16 @@ class PostRepositoryImpl implements PostRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> addPost(DomainModel post) async {
+    final Apiposts postModel =
+        Apiposts(id: post.id, title: post.title, body: post.body);
+
+    try {
+      await remoteDataSource.addedPost(postModel);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

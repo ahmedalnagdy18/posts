@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/add_post_usecase.dart';
 import 'package:nagdy_app/features/posts/domain/usecase/delete_usecase.dart';
-import 'package:nagdy_app/features/posts/domain/usecase/update_post.dart';
-import 'package:nagdy_app/features/posts/domain/usecase/usecase.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/update_post_usecase.dart';
+import 'package:nagdy_app/features/posts/domain/usecase/get_posts_usecase.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_cubit.dart';
 import 'package:nagdy_app/features/posts/presentation/cubits/cubit/posts_state.dart';
 import 'package:nagdy_app/features/posts/presentation/pages/add_post_page.dart';
@@ -19,7 +20,8 @@ class TimelineScreen extends StatelessWidget {
       create: (context) => PostsCubit(
           PostUsecase(repository: sl()),
           DeletePostUsecase(repository: sl()),
-          UpdatePostUsecase(repository: sl()))
+          UpdatePostUsecase(repository: sl()),
+          AddPostUsecase(repository: sl()))
         ..fetchData(10, 0),
       child: const _TimelineBody(),
     );
@@ -67,8 +69,13 @@ class _TimelineBodyState extends State<_TimelineBody> {
                   tooltip: 'Add Review',
                   elevation: 4.0,
                   onPressed: () {
+                    final postCubit = BlocProvider.of<PostsCubit>(context);
+
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AddpostPage()));
+                        builder: (context) => BlocProvider.value(
+                              value: postCubit,
+                              child: const AddpostPage(),
+                            )));
                   },
                   child: Container(
                     decoration: const BoxDecoration(
