@@ -40,7 +40,7 @@ class PostRemoteDataSource {
     if (response.statusCode == 200) {
       return;
     } else {
-      throw Exception('Failed to delete post');
+      throw Exception('Failed to upadate post');
     }
   }
 
@@ -55,7 +55,7 @@ class PostRemoteDataSource {
     if (response.statusCode == 201) {
       return;
     } else {
-      throw Exception('Failed to delete post');
+      throw Exception('Failed to add post');
     }
   }
 }
